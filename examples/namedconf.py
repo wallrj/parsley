@@ -1,5 +1,6 @@
 from parsley import makeGrammar, termMaker as t
 
+
 namedconf = r"""
 name = <letterOrDigit+>
 
@@ -16,7 +17,7 @@ quotedString = (('"' | '\''):q <(~exactly(q) anything)*>:xs exactly(q))
                      -> xs
 """
 
-NamedConf = makeGrammar(namedconf, globals(), name="TinyHTML")
+NamedConf = makeGrammar(namedconf, dict(t=t), name="TinyHTML")
 
 c = NamedConf(r"""
 options {
@@ -28,4 +29,4 @@ options {
 }
 """)
 
-print 'STATEMENT', c.statement()
+print c.statement()
