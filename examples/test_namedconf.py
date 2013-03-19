@@ -9,3 +9,12 @@ class NamedConfParserTests(unittest.TestCase):
         """
         self.assertEqual(
             NCP("mydirective;").directive(), ('mydirective', None))
+
+
+    def test_directiveWithValue(self):
+        """
+        A directive with a quoted value returns the unquoted value.
+        """
+        self.assertEqual(
+            NCP("mydirective 'myvalue';").directive(),
+            ('mydirective', 'myvalue'))
