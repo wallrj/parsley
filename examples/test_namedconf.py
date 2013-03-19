@@ -1,5 +1,10 @@
-from namedconf import NamedConfParser as NCP
 import unittest
+
+from parsley import termMaker as t
+
+from namedconf import NamedConfParser as NCP
+
+
 
 class NamedConfParserTests(unittest.TestCase):
 
@@ -18,3 +23,21 @@ class NamedConfParserTests(unittest.TestCase):
         self.assertEqual(
             NCP("mydirective 'myvalue';").directive(),
             ('mydirective', 'myvalue'))
+
+
+    def test_directive(self):
+        """
+        A directive with a quoted value returns the unquoted value.
+        """
+        self.assertEqual(
+            NCP("mydirective 'myvalue';").directive(),
+            ('mydirective', 'myvalue'))
+
+
+    def test_statementEmpty(self):
+        """
+        A statement may not contain any content.
+        """
+        self.assertEqual(
+            NCP("mystatement { }").statement(),
+            t.Element('mystatement', []))
