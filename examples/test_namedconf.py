@@ -50,3 +50,15 @@ class NamedConfParserTests(unittest.TestCase):
         self.assertEqual(
             NCP("mystatement { mydirective; }").statement(),
             t.Element('mystatement', [('mydirective', None)]))
+
+
+    def test_statementNested(self):
+        """
+        A statement may contain other statements.
+        """
+        self.assertEqual(
+            NCP("mystatement { mysubstatement {} }").statement(),
+            t.Element(
+                'mystatement', [
+                    t.Element('mysubstatement', []),
+                ]))
