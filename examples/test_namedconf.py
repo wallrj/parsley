@@ -41,3 +41,12 @@ class NamedConfParserTests(unittest.TestCase):
         self.assertEqual(
             NCP("mystatement { }").statement(),
             t.Element('mystatement', []))
+
+
+    def test_statementWithDirective(self):
+        """
+        A statement may contain directives.
+        """
+        self.assertEqual(
+            NCP("mystatement { mydirective; }").statement(),
+            t.Element('mystatement', [('mydirective', None)]))
