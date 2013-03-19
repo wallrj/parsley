@@ -1,6 +1,7 @@
 from parsley import makeGrammar, termMaker as t
 
 
+
 namedconf = r"""
 name = <letterOrDigit+>
 
@@ -17,16 +18,26 @@ quotedString = (('"' | '\''):q <(~exactly(q) anything)*>:xs exactly(q))
                      -> xs
 """
 
-NamedConf = makeGrammar(namedconf, dict(t=t), name="TinyHTML")
 
-c = NamedConf(r"""
-options {
-    mydirective "mydirectiveval";
-    listen {
-        listendirective 'foobar';
-        lonedirective;
+
+NamedConfParser = makeGrammar(namedconf, dict(t=t), name="TinyHTML")
+
+
+
+def main():
+    c = NamedConfParser(r"""
+    options {
+        mydirective "mydirectiveval";
+        listen {
+            listendirective 'foobar';
+            lonedirective;
+        }
     }
-}
-""")
+    """)
 
-print c.statement()
+    print c.statement()
+
+
+
+if __name__ == '__main__':
+    main()
